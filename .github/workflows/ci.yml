@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Node.js CI/CD
 
 on:
   push:
@@ -7,9 +7,9 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
+  # The Continuous Integration (CI) Job
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -21,3 +21,20 @@ jobs:
 
     - name: Run Tests
       run: npm test
+
+  # The Continuous Deployment (CD) Job
+  deploy:
+    # IMPORTANT: This tells GitHub to ONLY run deployment if the tests pass!
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Simulate Deployment to Production
+      run: |
+        echo "🚀 Downloading final build artifact..."
+        echo "🔒 Authenticating with production server..."
+        echo "✅ Uploading files to server..."
+        echo "🎉 Deployment successful! App is now live."
