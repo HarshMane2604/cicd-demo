@@ -20,5 +20,5 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Expose port
 EXPOSE 80
 
-# Run nginx in foreground
-CMD ["nginx", "-g", "daemon off;"]
+# Run nginx in foreground and dynamically bind to PORT assigned by Railway
+CMD sed -i -e 's/listen       80;/listen       '"${PORT:-80}"';/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
