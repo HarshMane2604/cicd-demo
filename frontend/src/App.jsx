@@ -6,8 +6,9 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Fetch data from the FastAPI backend
-    fetch('http://localhost:8000/api/message')
+    // Fetch data from the FastAPI backend using an environment variable
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    fetch(`${apiUrl}/api/message`)
       .then(response => response.json())
       .then(data => {
         setMessage(data.message)
