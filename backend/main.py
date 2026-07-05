@@ -12,6 +12,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {"status": "Backend is running!"}
+
 @app.get("/api/message")
 def read_message():
     return {"message": "Hello from the Python FastAPI Backend!"}
