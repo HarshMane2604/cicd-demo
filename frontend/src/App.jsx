@@ -7,7 +7,11 @@ function App() {
 
   useEffect(() => {
     // Fetch data from the FastAPI backend using an environment variable
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    let apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+    // Remove trailing slash if the user accidentally added one in Railway
+    if (apiUrl.endsWith('/')) {
+      apiUrl = apiUrl.slice(0, -1);
+    }
     fetch(`${apiUrl}/api/message`)
       .then(response => response.json())
       .then(data => {
